@@ -31,8 +31,11 @@ const GlobalStyles = createGlobalStyle`
 		@media (max-width: 1000px) {
 			font-size: 6px;
 		}
-				@media (max-width: 750px) {
+		@media (max-width: 750px) {
 			font-size: 5px;
+		}
+		@media (max-width: 666px) {
+			font-size: 4.5px;
 		}
 	}
 

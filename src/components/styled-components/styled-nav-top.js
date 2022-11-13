@@ -7,7 +7,7 @@ export const NavTop = styled.div`
   padding-left: 6rem;
   padding-right: 6rem;
   padding-top: 3rem;
-  padding-bottom: 10.7rem;
+  padding-bottom: 8rem;
   font-size: 1.6rem;
   @media (max-width: 750px) {
     padding-bottom: 7rem;

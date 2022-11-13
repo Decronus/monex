@@ -1,18 +1,18 @@
 import * as S from "./styled-components/styled-city-input";
 
-const CityInput = () => {
+const CityInput = ({ handleChangeCity }) => {
   return (
     <S.CityInputWrap>
-      <S.CityInput>
-        <option value="city" style={{ color: "#6F6F6F" }}>
-          Город
+      <S.CityInput onChange={(event) => handleChangeCity(event)}>
+        <option value="Города" style={{ color: "#6F6F6F" }}>
+          Все города
         </option>
-        <option value="Bar">Бар</option>
-        <option value="Budva">Будва</option>
-        <option value="Kotor">Котор</option>
-        <option value="Podgorica">Подгорица</option>
-        <option value="Tivat">Тиват</option>
-        <option value="HN">Херцег-Нови</option>
+        <option value="Бар">Бар</option>
+        <option value="Будва">Будва</option>
+        <option value="Котор">Котор</option>
+        <option value="Подгорица">Подгорица</option>
+        <option value="Тиват">Тиват</option>
+        <option value="Херцег-Нови">Херцег-Нови</option>
       </S.CityInput>
       <S.DownArrowSvg>
         <svg

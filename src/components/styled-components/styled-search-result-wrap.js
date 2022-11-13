@@ -7,19 +7,19 @@ export const SearchResultWrap = styled.div`
   margin-right: 6rem;
   padding-left: 6rem;
   padding-right: 6rem;
-  //   display: flex;
-  //   flex-direction: column;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  column-gap: 100px;
-  justify-content: space-between;
+  grid-template-columns: 2fr 7fr 1fr;
+  align-items: center;
   font-size: 2.4rem;
+  @media (max-width: 666px) {
+    grid-template-columns: 3fr 6fr 1fr;
+  }
 `;
 
-export const SearchResultString = styled.div`
+export const CurrencyAndLimitWrap = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const SearchResultCurrency = styled.p`
@@ -30,12 +30,19 @@ export const SearchResultCurrency = styled.p`
 
 export const SearchResultLimit = styled.p`
   color: #6f6f6f;
+  font-size: 1.8rem;
 `;
 
 export const SearchResultCityWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+`;
+
+export const CityAndNameWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const SearchResultCityIcon = styled.div`
@@ -51,6 +58,7 @@ export const SearchResultCity = styled.p`
 
 export const SearchResultName = styled.p`
   color: #6f6f6f;
+  font-size: 1.8rem;
 `;
 
 export const SearchResultExchange = styled.p`

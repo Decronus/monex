@@ -6,17 +6,16 @@ export const MainFilter = styled.div`
   align-items: center;
   padding-left: 6rem;
   padding-right: 6rem;
+
   margin-left: 6rem;
   margin-right: 6rem;
-  margin-bottom: 6rem;
-//   width: 1488px;
+  //   margin: 0 auto;
+  margin-bottom: 2rem;
+  //   max-width: 660px;
   height: 10rem;
   background: #212121;
   font-size: 3.2rem;
   color: #6f6f6f;
-  & svg {
-	margin
-  }
 `;
 
 export const GiveCurrency = styled.div`

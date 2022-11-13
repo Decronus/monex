@@ -11,7 +11,7 @@ export const MainHeadingAndCurrencies = styled.div`
 `;
 
 export const MainHeading = styled.h1`
-  font-size: 7.2rem;
+  font-size: 6.4rem;
   text-align: center;
 `;
 

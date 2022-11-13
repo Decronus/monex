@@ -45,7 +45,7 @@ const NavTop = () => {
           <p>ПРОФИЛЬ</p>
         </S.MenuList>
         <Button
-          text="Создать предложение"
+          text="Продать евро"
           primary={true}
           padding="2rem 3.5rem"
           //   width="372px"
