@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import MainFilter from "./components/main-filter";
+import MainHeadingAndCurrencies from "./components/main-heading-and-currencies";
+import NavTop from "./components/nav-top";
+import SearchResultWrap from "./components/search-result-wrap";
+
+import SEARCH_RESULTS from "./CONSTS/SEARCH_RESULTS";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavTop></NavTop>
+      <MainHeadingAndCurrencies />
+      <MainFilter />
+      {SEARCH_RESULTS.map((result) => {
+        return (
+          <SearchResultWrap
+            currency={result.currency}
+            limit={result.limit}
+            city={result.city}
+            name={result.name}
+          />
+        );
+      })}
     </div>
   );
 }
