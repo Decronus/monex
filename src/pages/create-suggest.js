@@ -57,6 +57,7 @@ const CreateSuggest = () => {
 
           //Добавляем в базу объявы
           set(ref(database, "adverts/" + lastID), {
+            id: lastID,
             rate,
             limit,
             city,

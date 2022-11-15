@@ -6,6 +6,7 @@ import StyledNothingFoundParagraph from "../components/styled-components/styled-
 import { useEffect, useState } from "react";
 import { getDatabase, ref, get, child } from "firebase/database";
 import "../firebase";
+import * as S from "../components/styled-components/styled-suggest-popup";
 
 const Main = () => {
   const [advertsResult, setAdvertsResult] = useState(null);
@@ -44,8 +45,52 @@ const Main = () => {
     }
   };
 
+  const [popupVisibility, setPopupVisibility] = useState(false);
+  const openSuggestPopup = () => {
+    setPopupVisibility(true);
+  };
+
+  const closeSuggestPopup = () => {
+    setPopupVisibility(false);
+  };
+
+  const [currentSuggest, setCurrentSuggest] = useState({
+    rate: "",
+    limit: "",
+    city: "",
+    name: "",
+    description: "",
+  });
+
   const handleBuy = (event) => {
-    event.target.textContent = "КУПЛЕНО";
+    console.log(event.target.id);
+
+    const dbRef = ref(getDatabase());
+
+    get(child(dbRef, "adverts"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const id = event.target.id;
+          const result = snapshot.val();
+          const clickedSuggest = result[id];
+          console.log(result[id]);
+          setCurrentSuggest({
+            rate: clickedSuggest.rate,
+            limit: clickedSuggest.limit,
+            city: clickedSuggest.city,
+            name: clickedSuggest.name,
+            description: clickedSuggest.description,
+          });
+          openSuggestPopup();
+          //   const currentSuggest = result[id];
+          //   console.log(currentSuggest.city);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -64,6 +109,7 @@ const Main = () => {
                 limit={"от " + result.limit + " €"}
                 city={result.city}
                 name={result.name}
+                id={result.id}
                 key={key}
                 handleBuy={handleBuy}
               />
@@ -74,6 +120,22 @@ const Main = () => {
           Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз.
         </StyledNothingFoundParagraph>
       )}
+
+      <S.SuggestPopupBackground
+        onClick={closeSuggestPopup}
+        style={{
+          opacity: popupVisibility ? "1" : "0",
+          visibility: popupVisibility ? "visible" : "hidden",
+        }}
+      >
+        <S.SuggestPopupWrap>
+          <p>{currentSuggest.rate}</p>
+          <p>{currentSuggest.limit}</p>
+          <p>{currentSuggest.city}</p>
+          <p>{currentSuggest.name}</p>
+          <p>{currentSuggest.description}</p>
+        </S.SuggestPopupWrap>
+      </S.SuggestPopupBackground>
     </>
   );
 };

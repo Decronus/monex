@@ -1,6 +1,6 @@
 import * as S from "./styled-components/styled-search-result-wrap";
 
-const SearchResultWrap = ({ currency, limit, city, name, handleBuy }) => {
+const SearchResultWrap = ({ id, currency, limit, city, name, handleBuy }) => {
   return (
     <S.SearchResultWrap>
       <S.CurrencyAndLimitWrap>
@@ -27,7 +27,7 @@ const SearchResultWrap = ({ currency, limit, city, name, handleBuy }) => {
           <S.SearchResultName>{name}</S.SearchResultName>
         </S.CityAndNameWrap>
       </S.SearchResultCityWrap>
-      <S.SearchResultExchange onClick={(event) => handleBuy(event)}>
+      <S.SearchResultExchange id={id} onClick={handleBuy}>
         КУПИТЬ
       </S.SearchResultExchange>
     </S.SearchResultWrap>
