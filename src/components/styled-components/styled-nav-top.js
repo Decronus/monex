@@ -1,14 +1,15 @@
 import styled from "styled-components";
+import * as M from "./mixins";
 
 export const NavTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 6rem;
-  padding-right: 6rem;
+  ${M.paddingsLeftRight}
   padding-top: 3rem;
-  padding-bottom: 8rem;
+  padding-bottom: 6rem;
   font-size: 1.6rem;
+  font-weight: bold;
   @media (max-width: 750px) {
     padding-bottom: 7rem;
   }

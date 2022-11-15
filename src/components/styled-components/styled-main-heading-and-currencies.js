@@ -1,21 +1,15 @@
 import styled from "styled-components";
+import * as M from "./mixins";
 
 export const MainHeadingAndCurrencies = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 5.3rem;
-  padding-left: 6rem;
-  padding-right: 6rem;
+  gap: 4rem;
+  ${M.paddingsLeftRight}
   margin-bottom: 7rem;
 `;
 
 export const MainHeading = styled.h1`
   font-size: 6.4rem;
-  text-align: center;
-`;
-
-export const CurrenciesWrap = styled.div`
-  display: flex;
-  gap: 8rem;
 `;

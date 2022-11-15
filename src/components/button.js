@@ -1,13 +1,25 @@
 import StyledButton from "./styled-components/styled-button.js";
 
-const Button = ({ text, primary, padding }) => {
+const Button = ({
+  text,
+  primary,
+  padding,
+  uppercase,
+  opacity,
+  cursor,
+  handleClick,
+}) => {
   return (
     <StyledButton
       style={{
-        background: primary,
-        border: primary,
         padding: padding,
+        textTransform: uppercase,
       }}
+      primary={primary}
+      background={primary}
+      opacity={opacity}
+      cursor={cursor}
+      onClick={handleClick}
     >
       {text}
     </StyledButton>

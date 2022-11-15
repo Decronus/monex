@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const CurrencyGroup = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  align-items: left;
+  gap: 0.2rem;
 `;
 
 export const CurrencyValue = styled.h2`

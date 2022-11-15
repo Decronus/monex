@@ -15,22 +15,12 @@ export const CityInput = styled.select`
   height: 10rem;
   background: none;
   border: none;
-  appearance: none;
+  //   appearance: none;
   outline: none;
   cursor: pointer;
   font-size: 2.4rem;
-  //   @media (max-width: 1240px) {
-  //     width: 340px;
-  //   }
-  //   @media (max-width: 1000px) {
-  //     width: 240px;
-  //   }
-  //   @media (max-width: 820px) {
-  //     width: 200px;
-  //   }
-  //   @media (max-width: 666px) {
-  //     width: 140px;
-  //   }
+  font-weight: bold;
+  background: #212121;
 `;
 
 export const DownArrowSvg = styled.div`

@@ -5,16 +5,10 @@ const MainHeadingAndCurrencies = () => {
   return (
     <S.MainHeadingAndCurrencies>
       <S.MainHeading>Купить евро в&nbsp;Черногории</S.MainHeading>
-      <S.CurrenciesWrap>
-        <CurrencyGroup
-          currencyValue="63,57 ₽"
-          CurrencyDescription="Курс евро ЦБ РФ"
-        />
-        {/* <CurrencyGroup
-          currencyValue="0,40818 BYN"
-          CurrencyDescription="Курс евро НБ РБ"
-        /> */}
-      </S.CurrenciesWrap>
+      <CurrencyGroup
+        currencyValue="63,57&nbsp;₽"
+        CurrencyDescription="Курс евро ЦБ РФ"
+      />
     </S.MainHeadingAndCurrencies>
   );
 };
