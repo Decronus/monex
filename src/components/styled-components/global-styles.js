@@ -51,6 +51,10 @@ const GlobalStyles = createGlobalStyle`
 		font-family: "Artegra Sans Extended";
 	}
 
+	a {
+		text-decoration: none;
+	}
+
 	html {
 		font-size: 8px;
 		@media (max-width: 1440px) {

@@ -65,6 +65,7 @@ export const Select = styled.select`
   text-align: right;
   font-size: inherit;
   font-weight: inherit;
+  appearance: none;
 `;
 
 export const TextArea = styled.textarea`

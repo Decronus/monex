@@ -15,7 +15,7 @@ export const CityInput = styled.select`
   height: 10rem;
   background: none;
   border: none;
-  //   appearance: none;
+  appearance: none;
   outline: none;
   cursor: pointer;
   font-size: 2.4rem;

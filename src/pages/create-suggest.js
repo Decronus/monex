@@ -3,6 +3,8 @@ import * as S from "../components/styled-components/styled-create-suggest";
 import Input from "../components/input";
 import Button from "../components/button";
 import { useState } from "react";
+import { getDatabase, ref, set, get, child, update } from "firebase/database";
+// import { app } from "../firebase";
 
 const CreateSuggest = () => {
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -43,6 +45,41 @@ const CreateSuggest = () => {
     setDescription(event.target.value);
   };
 
+  const addSuggest = (rate, limit, city, name, description) => {
+    const database = getDatabase();
+    const dbRef = ref(getDatabase());
+
+    //Получаем последний id объявы и в рамках ответа обновляем базу
+    get(child(dbRef, "lastAdvertID"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const lastID = snapshot.val() + 1;
+          console.log("snapshot", snapshot.val());
+
+          //Добавляем в базу объявы
+          set(ref(database, "adverts/" + lastID), {
+            rate,
+            limit,
+            city,
+            name,
+            description,
+          });
+
+          //Обновляем ID
+          const updates = {};
+          updates["lastAdvertID"] = lastID;
+          update(dbRef, updates);
+
+          closeCreateSuggestPopup();
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <NavTop />
@@ -73,9 +110,9 @@ const CreateSuggest = () => {
           </S.InputElementWrap>
         </S.InputElementRow>
         <S.InputElementRow>
-          <S.InputElementWrap style={{ paddingLeft: "5.5rem" }}>
+          <S.InputElementWrap>
             <S.Select
-              style={{ textAlign: "left" }}
+              style={{ textAlign: "left", cursor: "pointer" }}
               onChange={handlerCityOnChange}
             >
               <option value="Город">Город</option>
@@ -147,7 +184,9 @@ const CreateSuggest = () => {
               text="Всё верно"
               primary={true}
               padding="2.5rem 6rem 2rem 6rem"
-              handleClick={closeCreateSuggestPopup}
+              handleClick={() =>
+                addSuggest(rate, limit, city, name, description)
+              }
             />
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>

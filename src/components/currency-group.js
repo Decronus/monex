@@ -1,18 +1,29 @@
 import * as S from "./styled-components/styled-currency-group";
+import { useEffect, useState } from "react";
 
-const CurrencyGroup = ({ currencyValue, CurrencyDescription }) => {
-  const request = new XMLHttpRequest();
-  request.open("GET", "httt://www.cbr-xml-daily.ru/daily_json.js");
-  //   request.responseType = "json";
-  request.send();
-  request.onload = () => {
-    const data = JSON.parse(request.responseText);
-    console.log(data.EUR.Value);
+const CurrencyGroup = ({ currencyDescription }) => {
+  const [currencyValue, setCurrencyValue] = useState("");
+
+  useEffect(() => {
+    getCurrencyValue();
+  }, []);
+
+  const getCurrencyValue = () => {
+    const request = new XMLHttpRequest();
+    request.open("GET", "https://www.cbr-xml-daily.ru/daily_json.js");
+    request.send();
+    request.onload = () => {
+      const data = JSON.parse(request.responseText);
+      setCurrencyValue(data.Valute.EUR.Value.toFixed(2));
+      console.log(data);
+      return data.Valute.EUR.Value;
+    };
   };
+
   return (
     <S.CurrencyGroup>
-      <S.CurrencyValue></S.CurrencyValue>
-      <S.CurrencyDescription>{CurrencyDescription}</S.CurrencyDescription>
+      <S.CurrencyValue>{currencyValue}₽</S.CurrencyValue>
+      <S.CurrencyDescription>{currencyDescription}</S.CurrencyDescription>
     </S.CurrencyGroup>
   );
 };

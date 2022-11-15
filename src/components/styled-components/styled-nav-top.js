@@ -31,3 +31,10 @@ export const MenuList = styled.div`
   align-items: center;
   gap: 3.2rem;
 `;
+
+export const MenuItem = styled.p`
+  &:hover {
+    border-bottom: 2px white solid;
+    transform: translate(0, 1px);
+  }
+`;
