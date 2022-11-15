@@ -15,7 +15,6 @@ const CurrencyGroup = ({ currencyDescription }) => {
     request.onload = () => {
       const data = JSON.parse(request.responseText);
       setCurrencyValue(data.Valute.EUR.Value.toFixed(2));
-      console.log(data);
       return data.Valute.EUR.Value;
     };
   };

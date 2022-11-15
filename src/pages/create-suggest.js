@@ -4,7 +4,6 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useState } from "react";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
-// import { app } from "../firebase";
 
 const CreateSuggest = () => {
   const [popupVisibility, setPopupVisibility] = useState(false);
