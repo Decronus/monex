@@ -17,9 +17,9 @@ export const SuggestPopupBackground = styled.div`
 export const SuggestPopupWrap = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 5rem;
-  max-width: 768px;
+  width: 768px;
   ${M.paddingsLeftRight}
   ${M.marginLeftRight}
   padding-top: 5rem;
@@ -27,7 +27,7 @@ export const SuggestPopupWrap = styled.div`
   background: #1b1b1b;
   font-size: 3.2rem;
   @media (max-width: 800px) {
-    text-align: center;
+    text-align: left;
   }
   @media (max-width: 768px) {
     max-width: 500px;
@@ -35,4 +35,43 @@ export const SuggestPopupWrap = styled.div`
   @media (max-width: 500px) {
     max-width: 320px;
   }
+`;
+
+export const NameAndRateRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const NameAndCityGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  & p {
+    font-weight: bold;
+  }
+`;
+
+export const IconAndCityWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+`;
+
+export const RateAndLimitGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  & > p:first-child {
+    font-weight: bold;
+    color: #39ee1b;
+  }
+  & > p:last-child {
+    font-size: 1.8rem;
+    color: #6f6f6f;
+  }
+  gap: 0.5rem;
+`;
+
+export const SuggestDesctription = styled.p`
+  font-size: 1.8rem;
 `;

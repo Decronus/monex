@@ -1,8 +1,15 @@
 import * as S from "./styled-components/styled-nav-top";
 // import Button from "./button";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
 const NavTop = () => {
+  const [burgerPopupVisibility, setBurgerPopupVisibility] = useState();
+  const openBurgerPopup = () => {
+    setBurgerPopupVisibility(true);
+  };
+  const closeBurgerPopup = () => {
+    setBurgerPopupVisibility(false);
+  };
   return (
     <S.NavTop>
       <Link to="/">
@@ -47,15 +54,55 @@ const NavTop = () => {
             <S.MenuItem>ПРОДАТЬ ЕВРО</S.MenuItem>
           </Link>
         </S.MenuList>
-        {/* <Link to="/create-suggest">
-          <Button
-            text="Продать евро"
-            primary={false}
-            padding="2rem 3.5rem 1.8rem 3.5rem"
-            uppercase="uppercase"
-          />
-        </Link> */}
+
+        <S.Burger onClick={openBurgerPopup}>
+          <svg
+            width="30"
+            height="21"
+            viewBox="0 0 30 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M0 0H30V2.8H0V0ZM0 8.8H30V11.6H0V8.8ZM30 17.6H0V20.4H30V17.6Z"
+              fill="white"
+            />
+          </svg>
+        </S.Burger>
       </S.MenuListAndButton>
+
+      <S.BurgerPopupWrap
+        style={{
+          display: burgerPopupVisibility ? "flex" : "none",
+        }}
+      >
+        <S.BurgerPopupClose onClick={closeBurgerPopup}>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11.9999 10.2201L2.38318 0.603455L0.40332 2.58335L10.02 12.2L0.40332 21.8167L2.38318 23.7966L11.9999 14.1799L21.6166 23.7966L23.5964 21.8167L13.9797 12.2L23.5964 2.58335L21.6166 0.603455L11.9999 10.2201Z"
+              fill="white"
+            />
+          </svg>
+        </S.BurgerPopupClose>
+        <S.MenuItemPopup>О СЕРВИСЕ</S.MenuItemPopup>
+        <S.MenuItemPopup>ПРОФИЛЬ</S.MenuItemPopup>
+        <Link to="/">
+          <S.MenuItemPopup>КУПИТЬ ЕВРО</S.MenuItemPopup>
+        </Link>
+        <Link to="/create-suggest">
+          <S.MenuItemPopup>ПРОДАТЬ ЕВРО</S.MenuItemPopup>
+        </Link>
+      </S.BurgerPopupWrap>
     </S.NavTop>
   );
 };

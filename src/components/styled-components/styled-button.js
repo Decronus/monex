@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   opacity: ${({ opacity }) => opacity};
   cursor: ${({ cursor }) => cursor};
   font-size: inherit;
+  font-size: ${({ fontSize }) => fontSize};
   font-weight: bold;
 `;
 

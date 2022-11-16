@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getDatabase, ref, get, child } from "firebase/database";
 import "../firebase";
 import * as S from "../components/styled-components/styled-suggest-popup";
+import Button from "../components/button";
 
 const Main = () => {
   const [advertsResult, setAdvertsResult] = useState(null);
@@ -122,18 +123,50 @@ const Main = () => {
       )}
 
       <S.SuggestPopupBackground
-        onClick={closeSuggestPopup}
         style={{
           opacity: popupVisibility ? "1" : "0",
           visibility: popupVisibility ? "visible" : "hidden",
         }}
       >
         <S.SuggestPopupWrap>
-          <p>{currentSuggest.rate}</p>
-          <p>{currentSuggest.limit}</p>
-          <p>{currentSuggest.city}</p>
-          <p>{currentSuggest.name}</p>
-          <p>{currentSuggest.description}</p>
+          <S.NameAndRateRow>
+            <S.NameAndCityGroup>
+              <p>{currentSuggest.name}</p>
+              <S.IconAndCityWrap>
+                <svg
+                  width="13"
+                  height="18"
+                  viewBox="0 0 13 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 0C2.90643 0 0 2.817 0 6.3C0 11.025 6.5 18 6.5 18C6.5 18 13 11.025 13 6.3C13 2.817 10.0936 0 6.5 0ZM6.5 8.55C5.21857 8.55 4.17857 7.542 4.17857 6.3C4.17857 5.058 5.21857 4.05 6.5 4.05C7.78143 4.05 8.82143 5.058 8.82143 6.3C8.82143 7.542 7.78143 8.55 6.5 8.55Z"
+                    fill="#39EE1B"
+                  />
+                </svg>
+
+                <p>{currentSuggest.city}</p>
+              </S.IconAndCityWrap>
+            </S.NameAndCityGroup>
+            <S.RateAndLimitGroup>
+              <p>{currentSuggest.rate} ₽/€</p>
+              <p>от {currentSuggest.limit} €</p>
+            </S.RateAndLimitGroup>
+          </S.NameAndRateRow>
+
+          <S.SuggestDesctription>
+            {currentSuggest.description}
+          </S.SuggestDesctription>
+          <div>
+            <Button
+              text="Закрыть"
+              primary={false}
+              padding="2rem 4rem 1.5rem 4rem"
+              handleClick={closeSuggestPopup}
+              fontSize="1.8rem"
+            />
+          </div>
         </S.SuggestPopupWrap>
       </S.SuggestPopupBackground>
     </>

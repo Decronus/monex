@@ -6,10 +6,19 @@ export const MainHeadingAndCurrencies = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 4rem;
-  ${M.paddingsLeftRight}
+  ${M.marginLeftRight}
   margin-bottom: 7rem;
+  @media (max-width: 750px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 export const MainHeading = styled.h1`
   font-size: 6.4rem;
+  @media (max-width: 750px) {
+    line-height: 130%;
+  }
+  @media (max-width: 400px) {
+    font-size: 5rem;
+  }
 `;

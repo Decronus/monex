@@ -8,6 +8,7 @@ const Button = ({
   opacity,
   cursor,
   handleClick,
+  fontSize,
 }) => {
   return (
     <StyledButton
@@ -20,6 +21,7 @@ const Button = ({
       opacity={opacity}
       cursor={cursor}
       onClick={handleClick}
+      fontSize={fontSize}
     >
       {text}
     </StyledButton>
