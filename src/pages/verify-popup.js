@@ -1,77 +1,13 @@
 import Button from "../components/button";
 import * as S from "../components/styled-components/styled-login-popup";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState();
-  const [emailVerified, setEmailVerified] = useState();
-  const [password, setPassword] = useState();
-
-  const handlerOnChangeEmail = (event) => {
-    setEmail(event.target.value);
-  };
-  const handlerOnChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const [currentError, setCurrentError] = useState("");
-  const switchError = (error) => {
-    switch (error) {
-      case "auth/user-not-found":
-        setCurrentError("Аккаунт с таким именем не найден");
-        break;
-      case "auth/wrong-password":
-        setCurrentError("Неправильный пароль");
-        break;
-      case "auth/invalid-email":
-        setCurrentError("Неправильный формат email");
-        break;
-      default:
-        setCurrentError("Неизвестная ошибка");
-    }
-  };
-
-  const signInFunc = () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    console.log(user);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("user.emailVeified", user.emailVerified);
-        if (!user.emailVerified) {
-          signOut(auth)
-            .then(() => {
-              navigate("/verify-popup", { replace: true });
-            })
-            .catch((error) => {});
-        } else if (user.emailVerified) {
-          navigate("/", { replace: true });
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        // const errorMessage = error.message;
-        switchError(errorCode);
-        console.log("error code", errorCode);
-        // console.log(errorMessage);
-      });
-  };
-
-  const handlerKeyUp = (event) => {
-    if (event.code === "Enter") {
-      signInFunc();
-    }
-  };
+const VerifyPopup = () => {
   return (
     <S.LoginPopupBackground>
       <S.LoginPopup>
         <S.HeadingAndLogo>
-          <p>Вход в аккаунт</p>
+          <p>Подтвердите email</p>
           <Link to="/">
             <S.LogoWrap>
               <svg
@@ -105,38 +41,24 @@ const Login = () => {
           </Link>
         </S.HeadingAndLogo>
         <S.InputsWrap>
-          <S.Input
-            type="text"
-            placeholder="Email"
-            onChange={handlerOnChangeEmail}
-            onKeyUp={handlerKeyUp}
-          />
-          <S.Input
-            type="password"
-            placeholder="Пароль"
-            onChange={handlerOnChangePassword}
-            onKeyUp={handlerKeyUp}
-          />
-          <p>{currentError}</p>
+          <p style={{ color: "#ffffff" }}>
+            Чтобы войти в аккаунт, сначала подтвердите вашу почту, перейдя
+            по&nbsp;ссылке в письме
+          </p>
         </S.InputsWrap>
         <S.ButtonAndReg>
-          <Button
-            text="Войти"
-            primary={true}
-            padding="2.5rem 6rem 2rem 6rem"
-            fontSize="3rem"
-            handleClick={signInFunc}
-          />
-          <Link to="/reg">
-            <p>Зарегистрироваться</p>
+          <Link to="/login">
+            <Button
+              text="Войти в аккаунт"
+              primary={true}
+              padding="2.5rem 6rem 2rem 6rem"
+              fontSize="3rem"
+            />
           </Link>
         </S.ButtonAndReg>
-        <Link to="/reset-password">
-          <S.ForgotPass>Забыли пароль?</S.ForgotPass>
-        </Link>
       </S.LoginPopup>
     </S.LoginPopupBackground>
   );
 };
 
-export default Login;
+export default VerifyPopup;

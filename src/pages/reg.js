@@ -2,7 +2,12 @@ import Button from "../components/button";
 import * as S from "../components/styled-components/styled-login-popup";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, createContext } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 
 export const isLoginContext = createContext();
 
@@ -48,8 +53,22 @@ const Reg = () => {
           .then((userCredential) => {
             const user = userCredential.user;
             console.log("Зарегистрированный пользоваель", user);
-            setIsLogin(true);
-            navigate("/", { replace: true });
+
+            signOut(auth)
+              .then(() => {
+                setIsLogin(false);
+                console.log("Успешный разлогин");
+              })
+              .catch((error) => {
+                console.log("Ошибка разлогина");
+              });
+
+            sendEmailVerification(auth.currentUser).then(() => {
+              setCurrentError("Письмо для подтверждения email отправлено");
+            });
+
+            setIsLogin(false);
+            navigate("/verify-popup", { replace: true });
           })
           .catch((error) => {
             const errorCode = error.code;

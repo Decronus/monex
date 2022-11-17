@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ProtectedRoute } from "./components/protected-route";
 import ResetPassword from "./pages/reset-password";
+import VerifyPopup from "./pages/verify-popup";
 
 export const AppRoutes = () => {
   const [isLogin, setIsLogin] = useState();
@@ -23,6 +24,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
+      <Route path="/verify-popup" element={<VerifyPopup />} />
       <Route element={<ProtectedRoute isLogin={isLogin} />}>
         <Route path="/create-suggest" element={<CreateSuggest />} />
       </Route>
