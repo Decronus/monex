@@ -55,7 +55,7 @@ export const IconAndCityWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1.8rem;
+  font-size: 2.4rem;
 `;
 
 export const RateAndLimitGroup = styled.div`
@@ -66,12 +66,12 @@ export const RateAndLimitGroup = styled.div`
     color: #39ee1b;
   }
   & > p:last-child {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     color: #6f6f6f;
   }
   gap: 0.5rem;
 `;
 
 export const SuggestDesctription = styled.p`
-  font-size: 1.8rem;
+  font-size: 2.4rem;
 `;

@@ -53,6 +53,7 @@ const Main = () => {
 
   const closeSuggestPopup = () => {
     setPopupVisibility(false);
+    console.log("close");
   };
 
   const [currentSuggest, setCurrentSuggest] = useState({
@@ -83,8 +84,7 @@ const Main = () => {
             description: clickedSuggest.description,
           });
           openSuggestPopup();
-          //   const currentSuggest = result[id];
-          //   console.log(currentSuggest.city);
+          console.log("good");
         } else {
           console.log("No data available");
         }

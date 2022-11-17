@@ -2,7 +2,40 @@ import * as S from "./styled-components/styled-nav-top";
 // import Button from "./button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
 const NavTop = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [currentUserEmail, setCurrentUserEmail] = useState();
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      //   const uid = user.uid;
+      //   console.log("Пользователь вошел", uid);
+      //   console.log("Текущий пользователь", auth.currentUser.email);
+      setIsLogin(true);
+      setCurrentUserEmail(auth.currentUser.email);
+      return true;
+    } else {
+      setIsLogin(false);
+      //   console.log("Пользователь вышел");
+      return false;
+    }
+  });
+
+  const signOutFunc = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        setIsLogin(false);
+        console.log("Успешный разлогин");
+      })
+      .catch((error) => {
+        console.log("Ошибка разлогина");
+      });
+  };
+
   const [burgerPopupVisibility, setBurgerPopupVisibility] = useState();
   const openBurgerPopup = () => {
     setBurgerPopupVisibility(true);
@@ -53,6 +86,38 @@ const NavTop = () => {
           <Link to="/create-suggest">
             <S.MenuItem>ПРОДАТЬ ЕВРО</S.MenuItem>
           </Link>
+
+          {isLogin ? (
+            <S.MenuItemLoginWrap>
+              <S.MenuItemLogin style={{ color: "#39EE1B" }}>
+                {currentUserEmail}
+              </S.MenuItemLogin>
+              <S.MenuItemLoginArrow>
+                <svg
+                  width="13"
+                  height="12"
+                  viewBox="0 0 13 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 12L0.00481036 0.749999L12.9952 0.75L6.5 12Z"
+                    fill="#39EE1B"
+                  />
+                </svg>
+              </S.MenuItemLoginArrow>
+              <S.LoginDropdown>
+                <p>ПРОФИЛЬ</p>
+                <Link to="/">
+                  <p onClick={signOutFunc}>ВЫЙТИ</p>
+                </Link>
+              </S.LoginDropdown>
+            </S.MenuItemLoginWrap>
+          ) : (
+            <Link to="/login">
+              <S.MenuItem>ВОЙТИ</S.MenuItem>
+            </Link>
+          )}
         </S.MenuList>
 
         <S.Burger onClick={openBurgerPopup}>
@@ -75,7 +140,7 @@ const NavTop = () => {
 
       <S.BurgerPopupWrap
         style={{
-          display: burgerPopupVisibility ? "flex" : "none",
+          right: burgerPopupVisibility ? "0" : "-100%",
         }}
       >
         <S.BurgerPopupClose onClick={closeBurgerPopup}>

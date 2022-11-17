@@ -14,6 +14,9 @@ const StyledButton = styled.button`
   font-size: inherit;
   font-size: ${({ fontSize }) => fontSize};
   font-weight: bold;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export default StyledButton;
