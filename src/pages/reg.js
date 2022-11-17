@@ -23,25 +23,51 @@ const Reg = () => {
     setCheckPassword(event.target.value);
   };
 
+  const [currentError, setCurrentError] = useState("");
+  const switchError = (error) => {
+    switch (error) {
+      case "auth/invalid-email":
+        setCurrentError("Неправильный формат email");
+        break;
+      case "auth/weak-password":
+        setCurrentError("Пароль должен содержать больше 6 символов");
+        break;
+      case "auth/email-already-in-use":
+        setCurrentError("Такая почта уже зарегистрирована");
+        break;
+      default:
+        setCurrentError("Неизвестная ошибка");
+    }
+  };
+
   const registration = () => {
     if (email && password && checkPassword) {
       if (password === checkPassword) {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
-            // Signed in
             const user = userCredential.user;
             console.log("Зарегистрированный пользоваель", user);
             setIsLogin(true);
             navigate("/", { replace: true });
-            // ...
           })
           .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
+            // const errorMessage = error.message;
+            switchError(errorCode);
+            console.log(errorCode);
           });
+      } else if (password !== checkPassword) {
+        setCurrentError("Пароли не совпадают");
       }
+    } else {
+      setCurrentError("Заполните все поля");
+    }
+  };
+
+  const handlerKeyUp = (event) => {
+    if (event.code === "Enter") {
+      registration();
     }
   };
 
@@ -88,17 +114,21 @@ const Reg = () => {
               type="text"
               placeholder="Email"
               onChange={handlerOnChangeEmail}
+              onKeyUp={handlerKeyUp}
             />
             <S.Input
               type="password"
               placeholder="Пароль"
               onChange={handlerOnChangePassword}
+              onKeyUp={handlerKeyUp}
             />
             <S.Input
               type="password"
               placeholder="Повторите пароль"
               onChange={handlerOnChangeCheckPassword}
+              onKeyUp={handlerKeyUp}
             />
+            <p>{currentError}</p>
           </S.InputsWrap>
           <S.ButtonAndReg>
             <Button

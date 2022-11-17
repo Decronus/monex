@@ -2,66 +2,64 @@ import Button from "../components/button";
 import * as S from "../components/styled-components/styled-login-popup";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
 
   const handlerOnChangeEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handlerOnChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
 
-  const [currentError, setCurrentError] = useState("");
+  const [currentMessage, setCurrentMessage] = useState("");
   const switchError = (error) => {
     switch (error) {
-      case "auth/user-not-found":
-        setCurrentError("Аккаунт с таким именем не найден");
-        break;
-      case "auth/wrong-password":
-        setCurrentError("Неправильный пароль");
+      case "auth/missing-email":
+        setCurrentMessage("Введите email");
         break;
       case "auth/invalid-email":
-        setCurrentError("Неправильный формат email");
+        setCurrentMessage("Неправильный формат email");
+        break;
+      case "auth/user-not-found":
+        setCurrentMessage("Такой email не зарегистрирован");
         break;
       default:
-        setCurrentError("Неизвестная ошибка");
+        setCurrentMessage("Неизвестная ошибка");
     }
   };
 
-  const signInFunc = () => {
+  const resetPass = () => {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("user", user);
-        console.log("Удачный вход");
-        navigate("/", { replace: true });
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setCurrentMessage(
+          "Ссылка для восстановления пароля отправлена на вашу почту"
+        );
+        setTimeout(() => {
+          navigate("/", { replace: true });
+        }, 3000);
       })
       .catch((error) => {
         const errorCode = error.code;
-        // const errorMessage = error.message;
-        switchError(errorCode);
         console.log("error code", errorCode);
-        // console.log(errorMessage);
+        switchError(errorCode);
+        // const errorMessage = error.message;
+        // ..
       });
   };
 
   const handlerKeyUp = (event) => {
     if (event.code === "Enter") {
-      signInFunc();
+      resetPass();
     }
   };
   return (
     <S.LoginPopupBackground>
       <S.LoginPopup>
         <S.HeadingAndLogo>
-          <p>Вход в аккаунт</p>
+          <p>Сброс пароля</p>
           <Link to="/">
             <S.LogoWrap>
               <svg
@@ -101,32 +99,30 @@ const Login = () => {
             onChange={handlerOnChangeEmail}
             onKeyUp={handlerKeyUp}
           />
-          <S.Input
-            type="password"
-            placeholder="Пароль"
-            onChange={handlerOnChangePassword}
-            onKeyUp={handlerKeyUp}
-          />
-          <p>{currentError}</p>
+          <p
+            style={{
+              color:
+                currentMessage ===
+                "Ссылка для восстановления пароля отправлена на вашу почту"
+                  ? "#FFFFFF"
+                  : undefined,
+            }}
+          >
+            {currentMessage}
+          </p>
         </S.InputsWrap>
         <S.ButtonAndReg>
           <Button
-            text="Войти"
+            text="Сбросить пароль"
             primary={true}
             padding="2.5rem 6rem 2rem 6rem"
             fontSize="3rem"
-            handleClick={signInFunc}
+            handleClick={resetPass}
           />
-          <Link to="/reg">
-            <p>Зарегистрироваться</p>
-          </Link>
         </S.ButtonAndReg>
-        <Link to="/reset-password">
-          <S.ForgotPass>Забыли пароль?</S.ForgotPass>
-        </Link>
       </S.LoginPopup>
     </S.LoginPopupBackground>
   );
 };
 
-export default Login;
+export default ResetPassword;

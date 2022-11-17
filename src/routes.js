@@ -6,6 +6,7 @@ import Reg from "./pages/reg";
 import { useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ProtectedRoute } from "./components/protected-route";
+import ResetPassword from "./pages/reset-password";
 
 export const AppRoutes = () => {
   const [isLogin, setIsLogin] = useState();
@@ -18,15 +19,17 @@ export const AppRoutes = () => {
       setIsLogin(false);
     }
   });
+
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route element={<ProtectedRoute isLogin={!isLogin} />}>
+      <Route element={<ProtectedRoute isLogin={isLogin} />}>
         <Route path="/create-suggest" element={<CreateSuggest />} />
       </Route>
-      <Route element={<ProtectedRoute redirectPath="/" isLogin={isLogin} />}>
+      <Route element={<ProtectedRoute redirectPath="/" isLogin={!isLogin} />}>
         <Route path="/login" element={<Login />} />
         <Route path="/reg" element={<Reg />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
     </Routes>
   );

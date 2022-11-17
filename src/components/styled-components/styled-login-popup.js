@@ -54,6 +54,10 @@ export const InputsWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  & p {
+    color: #d21414;
+    font-size: 3rem;
+  }
 `;
 
 export const Input = styled.input`
@@ -75,5 +79,15 @@ export const ButtonAndReg = styled.div`
     &:hover {
       opacity: 0.8;
     }
+  }
+`;
+
+export const ForgotPass = styled.p`
+  align-self: flex-start;
+  font-size: 2rem;
+  color: #6f6f6f;
+  &:hover {
+    cursor: pointer;
+    color: #ffffff;
   }
 `;
