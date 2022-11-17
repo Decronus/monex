@@ -1,27 +1,29 @@
 import * as S from "./styled-components/styled-nav-top";
 // import Button from "./button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 const NavTop = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState();
 
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      //   const uid = user.uid;
-      //   console.log("Пользователь вошел", uid);
-      //   console.log("Текущий пользователь", auth.currentUser.email);
-      setIsLogin(true);
-      setCurrentUserEmail(auth.currentUser.email);
-      return true;
-    } else {
-      setIsLogin(false);
-      //   console.log("Пользователь вышел");
-      return false;
-    }
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("Пользователь вошел", uid);
+        console.log("Текущий пользователь", auth.currentUser.email);
+        setIsLogin(true);
+        setCurrentUserEmail(auth.currentUser.email);
+        return true;
+      } else {
+        setIsLogin(false);
+        console.log("Пользователь вышел");
+        return false;
+      }
+    });
   });
 
   const signOutFunc = () => {
