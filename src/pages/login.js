@@ -48,7 +48,10 @@ const Login = () => {
             })
             .catch((error) => {});
         } else if (user.emailVerified) {
-          navigate("/", { replace: true });
+          localStorage.getItem("toCreateSuggest") === "true"
+            ? navigate("/create-suggest", { replace: true })
+            : navigate("/", { replace: true });
+          localStorage.setItem("toCreateSuggest", "false");
         }
       })
       .catch((error) => {

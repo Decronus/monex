@@ -45,6 +45,7 @@ export const getUserEmail = () => {
 
 export const signOutFunc = () => {
   const auth = getAuth();
+
   signOut(auth)
     .then(() => {})
     .catch((error) => {});

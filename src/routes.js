@@ -13,9 +13,9 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/verify-popup" element={<VerifyPopup />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/create-suggest" element={<CreateSuggest />} />
-      </Route>
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route path="/create-suggest" element={<CreateSuggest />} />
+      {/* </Route> */}
       <Route element={<ProtectedRouteIsLogin />}>
         <Route path="/login" element={<Login />} />
         <Route path="/reg" element={<Reg />} />

@@ -114,6 +114,29 @@ const NavTop = () => {
           right: burgerPopupVisibility ? "0" : "-100%",
         }}
       >
+        {isLogin && (
+          <S.MenuItemPopup style={{ color: "#39EE1B" }}>
+            {currentUserEmail}
+          </S.MenuItemPopup>
+        )}
+        <S.MenuItemPopup>ПРОФИЛЬ</S.MenuItemPopup>
+        <Link to="/">
+          <S.MenuItemPopup>КУПИТЬ ЕВРО</S.MenuItemPopup>
+        </Link>
+        <Link to="/create-suggest">
+          <S.MenuItemPopup>ПРОДАТЬ ЕВРО</S.MenuItemPopup>
+        </Link>
+
+        {isLogin ? (
+          <Link to="/">
+            <S.MenuItemPopup onClick={signOutFunc}>ВЫЙТИ</S.MenuItemPopup>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <S.MenuItemPopup>ВОЙТИ</S.MenuItemPopup>
+          </Link>
+        )}
+
         <S.BurgerPopupClose onClick={closeBurgerPopup}>
           <svg
             width="24"
@@ -130,14 +153,6 @@ const NavTop = () => {
             />
           </svg>
         </S.BurgerPopupClose>
-        <S.MenuItemPopup>О СЕРВИСЕ</S.MenuItemPopup>
-        <S.MenuItemPopup>ПРОФИЛЬ</S.MenuItemPopup>
-        <Link to="/">
-          <S.MenuItemPopup>КУПИТЬ ЕВРО</S.MenuItemPopup>
-        </Link>
-        <Link to="/create-suggest">
-          <S.MenuItemPopup>ПРОДАТЬ ЕВРО</S.MenuItemPopup>
-        </Link>
       </S.BurgerPopupWrap>
     </S.NavTop>
   );

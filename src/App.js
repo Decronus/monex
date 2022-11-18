@@ -1,13 +1,13 @@
 import { AppRoutes } from "./routes";
 import { createContext } from "react";
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const UserIsLoginContext = createContext("default");
 
 function App() {
   const [isLogin, setIsLogin] = useState();
-  useLayoutEffect(() => {
+  useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       setIsLogin(user);

@@ -98,6 +98,7 @@ export const LoginDropdown = styled.div`
 
 export const MenuItemPopup = styled.p`
   font-size: 2.5rem;
+  text-transform: uppercase;
 `;
 
 export const Burger = styled.div`
@@ -124,7 +125,7 @@ export const BurgerPopupWrap = styled.div`
   background: #212121;
   ${M.paddingsLeftRight}
   padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
   z-index: 10;
   transition: all 0.3s ease-in-out;
   @media (max-width: 700px) {
@@ -134,9 +135,6 @@ export const BurgerPopupWrap = styled.div`
 
 export const BurgerPopupClose = styled.div`
   cursor: pointer;
-  position: absolute;
-  right: 6rem;
-  top: 6rem;
   & svg {
     width: 4rem;
   }

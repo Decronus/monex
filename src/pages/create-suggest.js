@@ -12,7 +12,7 @@ import { UserIsLoginContext } from "../App";
 
 const CreateSuggest = () => {
   const isLogin = useContext(UserIsLoginContext);
-  console.log("create suggest user is login", isLogin);
+  //   console.log("create suggest user is login", isLogin);
 
   const MAX_ADVERTS_AMOUNT = 1;
 
@@ -150,7 +150,6 @@ const CreateSuggest = () => {
 
   return (
     <>
-      {/* <UserIsLoginContext.Provider value={isLogin}> */}
       <NavTop />
       <S.Heading>Создание предложения о&nbsp;продаже евро</S.Heading>
       <S.InputsWrap>
@@ -285,7 +284,36 @@ const CreateSuggest = () => {
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>
       </S.CreateSuggestPopupBackground>
-      {/* </UserIsLoginContext.Provider> */}
+
+      {/* Нужна регистрация */}
+      <S.CreateSuggestPopupBackground
+        style={{
+          opacity: isLogin ? "0" : "1",
+          visibility: isLogin ? "hidden" : "visible",
+        }}
+      >
+        <S.CreateSuggestPopupWrap>
+          <p>Войдите в аккаунт, чтобы создать предложение о продаже евро</p>
+          <S.PopupButtonsWrap>
+            <Button
+              text="Назад"
+              primary={false}
+              padding="2.5rem 6rem 2rem 6rem"
+              handleClick={() => window.history.back()}
+            />
+            <Link to="/login">
+              <Button
+                text="Войти"
+                primary={true}
+                padding="2.5rem 6rem 2rem 6rem"
+                handleClick={() =>
+                  localStorage.setItem("toCreateSuggest", "true")
+                }
+              />
+            </Link>
+          </S.PopupButtonsWrap>
+        </S.CreateSuggestPopupWrap>
+      </S.CreateSuggestPopupBackground>
     </>
   );
 };
