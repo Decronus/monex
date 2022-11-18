@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { Keyframes } from "styled-components";
 import * as M from "./mixins";
 
 export const SuggestPopupBackground = styled.div`
@@ -74,4 +75,30 @@ export const RateAndLimitGroup = styled.div`
 
 export const SuggestDesctription = styled.p`
   font-size: 2.4rem;
+`;
+
+export const StyledNothingFoundParagraph = styled.p`
+  font-size: 2.4rem;
+  color: #6f6f6f;
+  margin-left: 12rem;
+  margin-right: 12rem;
+  margin-top: 4rem;
+`;
+
+const loading = keyframes`
+  50% {
+	opacity: 1;
+  } 
+  100% {
+	opacity: 0.2;
+  }
+`;
+
+export const StyledLoadingParagraph = styled(StyledNothingFoundParagraph)`
+  font-size: 2.4rem;
+  color: #6f6f6f;
+  margin-left: 12rem;
+  margin-right: 12rem;
+  margin-top: 4rem;
+  animation: ${loading} 1s ease-in-out infinite;
 `;

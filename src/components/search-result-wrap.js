@@ -28,7 +28,7 @@ const SearchResultWrap = ({ id, currency, limit, city, name, handleBuy }) => {
         </S.CityAndNameWrap>
       </S.SearchResultCityWrap>
       <S.SearchResultExchange id={id} onClick={handleBuy}>
-        КУПИТЬ
+        ПОДРОБНЕЕ
       </S.SearchResultExchange>
     </S.SearchResultWrap>
   );

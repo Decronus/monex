@@ -9,10 +9,10 @@ import { getUserID } from "../firebase";
 import { getUserEmail } from "../firebase";
 import { Link } from "react-router-dom";
 import { UserIsLoginContext } from "../App";
+import { filterInputValue } from "../components/functions";
 
 const CreateSuggest = () => {
   const isLogin = useContext(UserIsLoginContext);
-  //   console.log("create suggest user is login", isLogin);
 
   const MAX_ADVERTS_AMOUNT = 1;
 
@@ -27,9 +27,8 @@ const CreateSuggest = () => {
 
   const [rate, setRate] = useState("");
   const handlerRateOnChange = (event) => {
-    const digitsValue = event.target.value.replace(/[^\d]/g, "");
-    setRate(digitsValue);
-    event.target.value = digitsValue;
+    setRate(filterInputValue(event));
+    event.target.value = filterInputValue(event);
   };
 
   const [limit, setLimit] = useState("");
@@ -236,8 +235,9 @@ const CreateSuggest = () => {
         <S.CreateSuggestPopupWrap>
           <p>
             Вы&nbsp;хотите продать евро по&nbsp;курсу{" "}
-            <S.PopupSpan>{rate}</S.PopupSpan> в&nbsp;количестве от&nbsp;
-            <S.PopupSpan>{limit}</S.PopupSpan> € в&nbsp;городе{" "}
+            <S.PopupSpan>{rate}&nbsp;€/₽</S.PopupSpan> в&nbsp;количестве
+            от&nbsp;
+            <S.PopupSpan>{limit}&nbsp;€</S.PopupSpan> в&nbsp;городе{" "}
             <S.PopupSpan>{city}</S.PopupSpan>?
           </p>
           <S.PopupButtonsWrap>
@@ -268,9 +268,9 @@ const CreateSuggest = () => {
       >
         <S.CreateSuggestPopupWrap>
           <p>
-            Нужен премиум, чтобы создать новое объявление. На данный момент
-            максимальное количество объявлений для вашего аккаунта:{" "}
-            {MAX_ADVERTS_AMOUNT}
+            Нужен <span>ПРЕМИУМ-АККАУНТ</span>, чтобы создать новое объявление.
+            На данный момент максимальное количество объявлений для вашего
+            аккаунта: <span>{MAX_ADVERTS_AMOUNT}</span>
           </p>
           <S.PopupButtonsWrap>
             <Link to="/">
@@ -293,7 +293,9 @@ const CreateSuggest = () => {
         }}
       >
         <S.CreateSuggestPopupWrap>
-          <p>Войдите в аккаунт, чтобы создать предложение о продаже евро</p>
+          <p>
+            Войдите в аккаунт, чтобы создать предложение о&nbsp;продаже евро
+          </p>
           <S.PopupButtonsWrap>
             <Button
               text="Назад"

@@ -2,7 +2,6 @@ import MainFilter from "../components/main-filter";
 import MainHeadingAndCurrencies from "../components/main-heading-and-currencies";
 import NavTop from "../components/nav-top";
 import SearchResultWrap from "../components/search-result-wrap";
-import StyledNothingFoundParagraph from "../components/styled-components/styled-nothing-found-paragraph";
 import { useEffect, useState } from "react";
 import { getDatabase, ref, get, child } from "firebase/database";
 import "../firebase";
@@ -22,7 +21,8 @@ const Main = () => {
       .then((snapshot) => {
         if (snapshot.exists()) {
           const result = Object.values(snapshot.val());
-          setAdvertsResult(result);
+          const sortedResult = result.sort((x, y) => x.rate - y.rate);
+          setAdvertsResult(sortedResult);
         } else {
           console.log("No data available");
         }
@@ -65,7 +65,6 @@ const Main = () => {
 
   const handleBuy = (event) => {
     const dbRef = ref(getDatabase());
-
     get(child(dbRef, "adverts"))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -96,26 +95,30 @@ const Main = () => {
       <MainHeadingAndCurrencies />
       <MainFilter handleChangeCity={handleChangeCity} />
 
-      {advertsResult?.filter((el) => switchCity(el)).length !== 0 ? (
-        advertsResult
-          ?.filter((el) => switchCity(el))
-          .map((result, key) => {
-            return (
-              <SearchResultWrap
-                currency={result.rate + " ₽"}
-                limit={"от " + result.limit + " €"}
-                city={result.city}
-                name={result.name}
-                id={result.id}
-                key={key}
-                handleBuy={handleBuy}
-              />
-            );
-          })
+      {advertsResult ? (
+        advertsResult?.filter((el) => switchCity(el)).length !== 0 ? (
+          advertsResult
+            ?.filter((el) => switchCity(el))
+            .map((result, key) => {
+              return (
+                <SearchResultWrap
+                  currency={result.rate + " ₽"}
+                  limit={"от " + result.limit + " €"}
+                  city={result.city}
+                  name={result.name}
+                  id={result.id}
+                  key={key}
+                  handleBuy={handleBuy}
+                />
+              );
+            })
+        ) : (
+          <S.StyledNothingFoundParagraph>
+            Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз.
+          </S.StyledNothingFoundParagraph>
+        )
       ) : (
-        <StyledNothingFoundParagraph>
-          Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз.
-        </StyledNothingFoundParagraph>
+        <S.StyledLoadingParagraph>Загрузка...</S.StyledLoadingParagraph>
       )}
 
       <S.SuggestPopupBackground

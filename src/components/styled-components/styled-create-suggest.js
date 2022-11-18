@@ -107,6 +107,12 @@ export const CreateSuggestPopupWrap = styled.div`
   padding-bottom: 5rem;
   background: #1b1b1b;
   font-size: 3.2rem;
+  & p {
+    text-align: center;
+    & span {
+      color: #39ee1b;
+    }
+  }
   @media (max-width: 800px) {
     text-align: center;
   }

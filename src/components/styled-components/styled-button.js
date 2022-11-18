@@ -14,10 +14,10 @@ const StyledButton = styled.button`
   font-size: inherit;
   font-size: ${({ fontSize }) => fontSize};
   font-weight: bold;
-  &:hover {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-      linear-gradient(180deg, #39ee1b 0%, #203e1c 100%);
-  }
+  //   &:hover {
+  //     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+  //       linear-gradient(180deg, #39ee1b 0%, #203e1c 100%);
+  //   }
 `;
 
 export default StyledButton;
