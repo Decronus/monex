@@ -2,13 +2,18 @@ import NavTop from "../components/nav-top";
 import * as S from "../components/styled-components/styled-create-suggest";
 import Input from "../components/input";
 import Button from "../components/button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
+
 import { getUserID } from "../firebase";
 import { getUserEmail } from "../firebase";
 import { Link } from "react-router-dom";
+import { UserIsLoginContext } from "../App";
 
 const CreateSuggest = () => {
+  const isLogin = useContext(UserIsLoginContext);
+  console.log("create suggest user is login", isLogin);
+
   const MAX_ADVERTS_AMOUNT = 1;
 
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -20,7 +25,7 @@ const CreateSuggest = () => {
     setPopupVisibility(false);
   };
 
-  const [rate, setRate] = useState("asfdasdf");
+  const [rate, setRate] = useState("");
   const handlerRateOnChange = (event) => {
     const digitsValue = event.target.value.replace(/[^\d]/g, "");
     setRate(digitsValue);
@@ -62,14 +67,11 @@ const CreateSuggest = () => {
           const lastID = snapshot.val() + 1;
           const userID = getUserID();
           const userEmail = getUserEmail();
-          console.log(userID);
-          console.log("snapshot", snapshot.val());
 
           get(child(dbRef, "users"))
             .then((snapshot) => {
               if (snapshot.exists()) {
                 const users = snapshot.val();
-                console.log("users", users);
 
                 //Если пользователь впервые создает объяву,
                 //добавляем инфу в объект users
@@ -126,7 +128,6 @@ const CreateSuggest = () => {
                   } else {
                     closeCreateSuggestPopup();
                     setPremiumPopupVisibility(true);
-                    console.log("Нельзя разместить объявление, нужен премиум");
                   }
                 }
               } else {
@@ -149,6 +150,7 @@ const CreateSuggest = () => {
 
   return (
     <>
+      {/* <UserIsLoginContext.Provider value={isLogin}> */}
       <NavTop />
       <S.Heading>Создание предложения о&nbsp;продаже евро</S.Heading>
       <S.InputsWrap>
@@ -283,6 +285,7 @@ const CreateSuggest = () => {
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>
       </S.CreateSuggestPopupBackground>
+      {/* </UserIsLoginContext.Provider> */}
     </>
   );
 };

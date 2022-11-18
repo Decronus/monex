@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -41,4 +41,11 @@ export const getUserEmail = () => {
   if (user !== null) {
     return user.email;
   }
+};
+
+export const signOutFunc = () => {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {})
+    .catch((error) => {});
 };

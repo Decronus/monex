@@ -41,7 +41,6 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("user.emailVeified", user.emailVerified);
         if (!user.emailVerified) {
           signOut(auth)
             .then(() => {
@@ -56,7 +55,6 @@ const Login = () => {
         const errorCode = error.code;
         // const errorMessage = error.message;
         switchError(errorCode);
-        console.log("error code", errorCode);
         // console.log(errorMessage);
       });
   };

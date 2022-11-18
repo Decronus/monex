@@ -1,42 +1,12 @@
 import * as S from "./styled-components/styled-nav-top";
-// import Button from "./button";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { useState, useContext } from "react";
+import { UserIsLoginContext } from "../App";
+import { signOutFunc } from "../firebase";
 
 const NavTop = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const [currentUserEmail, setCurrentUserEmail] = useState();
-
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log("Пользователь вошел", uid);
-        console.log("Текущий пользователь", auth.currentUser.email);
-        setIsLogin(true);
-        setCurrentUserEmail(auth.currentUser.email);
-        return true;
-      } else {
-        setIsLogin(false);
-        console.log("Пользователь вышел");
-        return false;
-      }
-    });
-  });
-
-  const signOutFunc = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        setIsLogin(false);
-        console.log("Успешный разлогин");
-      })
-      .catch((error) => {
-        console.log("Ошибка разлогина");
-      });
-  };
+  const isLogin = useContext(UserIsLoginContext);
+  const currentUserEmail = isLogin?.email;
 
   const [burgerPopupVisibility, setBurgerPopupVisibility] = useState();
   const openBurgerPopup = () => {
@@ -45,6 +15,7 @@ const NavTop = () => {
   const closeBurgerPopup = () => {
     setBurgerPopupVisibility(false);
   };
+
   return (
     <S.NavTop>
       <Link to="/">

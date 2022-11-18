@@ -53,7 +53,6 @@ const Main = () => {
 
   const closeSuggestPopup = () => {
     setPopupVisibility(false);
-    console.log("close");
   };
 
   const [currentSuggest, setCurrentSuggest] = useState({
@@ -65,8 +64,6 @@ const Main = () => {
   });
 
   const handleBuy = (event) => {
-    console.log(event.target.id);
-
     const dbRef = ref(getDatabase());
 
     get(child(dbRef, "adverts"))
@@ -84,7 +81,6 @@ const Main = () => {
             description: clickedSuggest.description,
           });
           openSuggestPopup();
-          console.log("good");
         } else {
           console.log("No data available");
         }

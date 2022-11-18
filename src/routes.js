@@ -3,36 +3,20 @@ import Main from "./pages/main";
 import CreateSuggest from "./pages/create-suggest";
 import Login from "./pages/login";
 import Reg from "./pages/reg";
-import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ProtectedRoute } from "./components/protected-route";
+import { ProtectedRouteIsLogin } from "./components/protected-route-islogin";
 import ResetPassword from "./pages/reset-password";
 import VerifyPopup from "./pages/verify-popup";
 
 export const AppRoutes = () => {
-  const [isLogin, setIsLogin] = useState();
-
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLogin(true);
-        console.log("routes", isLogin);
-      } else {
-        setIsLogin(false);
-        console.log("routes", isLogin);
-      }
-    });
-  });
-
   return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/verify-popup" element={<VerifyPopup />} />
-      <Route element={<ProtectedRoute isLogin={isLogin} />}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/create-suggest" element={<CreateSuggest />} />
       </Route>
-      <Route element={<ProtectedRoute redirectPath="/" isLogin={!isLogin} />}>
+      <Route element={<ProtectedRouteIsLogin />}>
         <Route path="/login" element={<Login />} />
         <Route path="/reg" element={<Reg />} />
         <Route path="/reset-password" element={<ResetPassword />} />

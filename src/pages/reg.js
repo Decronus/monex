@@ -52,16 +52,12 @@ const Reg = () => {
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log("Зарегистрированный пользоваель", user);
 
             signOut(auth)
               .then(() => {
                 setIsLogin(false);
-                console.log("Успешный разлогин");
               })
-              .catch((error) => {
-                console.log("Ошибка разлогина");
-              });
+              .catch((error) => {});
 
             sendEmailVerification(auth.currentUser).then(() => {});
 
@@ -72,7 +68,6 @@ const Reg = () => {
             const errorCode = error.code;
             // const errorMessage = error.message;
             switchError(errorCode);
-            console.log(errorCode);
           });
       } else if (password !== checkPassword) {
         setCurrentError("Пароли не совпадают");
