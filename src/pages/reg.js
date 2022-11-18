@@ -63,9 +63,7 @@ const Reg = () => {
                 console.log("Ошибка разлогина");
               });
 
-            sendEmailVerification(auth.currentUser).then(() => {
-              setCurrentError("Письмо для подтверждения email отправлено");
-            });
+            sendEmailVerification(auth.currentUser).then(() => {});
 
             setIsLogin(false);
             navigate("/verify-popup", { replace: true });

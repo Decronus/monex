@@ -80,8 +80,6 @@ const NavTop = () => {
       </Link>
       <S.MenuListAndButton>
         <S.MenuList>
-          <S.MenuItem>О СЕРВИСЕ</S.MenuItem>
-          <S.MenuItem>ПРОФИЛЬ</S.MenuItem>
           <Link to="/">
             <S.MenuItem>КУПИТЬ ЕВРО</S.MenuItem>
           </Link>

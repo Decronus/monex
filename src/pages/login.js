@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
-  const [emailVerified, setEmailVerified] = useState();
   const [password, setPassword] = useState();
 
   const handlerOnChangeEmail = (event) => {

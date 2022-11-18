@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
+import { getAuth } from "firebase/auth";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -25,3 +26,19 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export const getUserID = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    return user.uid;
+  }
+};
+
+export const getUserEmail = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    return user.email;
+  }
+};

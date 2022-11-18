@@ -4,8 +4,13 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useState } from "react";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
+import { getUserID } from "../firebase";
+import { getUserEmail } from "../firebase";
+import { Link } from "react-router-dom";
 
 const CreateSuggest = () => {
+  const MAX_ADVERTS_AMOUNT = 1;
+
   const [popupVisibility, setPopupVisibility] = useState(false);
   const openCreateSuggestPopup = () => {
     setPopupVisibility(true);
@@ -44,6 +49,8 @@ const CreateSuggest = () => {
     setDescription(event.target.value);
   };
 
+  const [PremiumPopupVisibility, setPremiumPopupVisibility] = useState(false);
+
   const addSuggest = (rate, limit, city, name, description) => {
     const database = getDatabase();
     const dbRef = ref(getDatabase());
@@ -53,22 +60,82 @@ const CreateSuggest = () => {
       .then((snapshot) => {
         if (snapshot.exists()) {
           const lastID = snapshot.val() + 1;
+          const userID = getUserID();
+          const userEmail = getUserEmail();
+          console.log(userID);
           console.log("snapshot", snapshot.val());
 
-          //Добавляем в базу объявы
-          set(ref(database, "adverts/" + lastID), {
-            id: lastID,
-            rate,
-            limit,
-            city,
-            name,
-            description,
-          });
+          get(child(dbRef, "users"))
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                const users = snapshot.val();
+                console.log("users", users);
 
-          //Обновляем ID
-          const updates = {};
-          updates["lastAdvertID"] = lastID;
-          update(dbRef, updates);
+                //Если пользователь впервые создает объяву,
+                //добавляем инфу в объект users
+                if (!users[userID]) {
+                  set(ref(database, "users/" + userID), {
+                    advertsAmount: MAX_ADVERTS_AMOUNT,
+                    premium: false,
+                    userEmail,
+                  });
+                  //Добавляем в базу объявы
+                  set(ref(database, "adverts/" + lastID), {
+                    id: lastID,
+                    userID,
+                    userEmail,
+                    rate,
+                    limit,
+                    city,
+                    name,
+                    description,
+                  });
+
+                  //Обновляем счетчик объяв
+                  const updates = {};
+                  updates["lastAdvertID"] = lastID;
+                  update(dbRef, updates);
+
+                  //Если пользователь есть в объекте users,
+                  //то есть создает объяву не впервые,
+                } else if (users[userID]) {
+                  const advertsAmount = users[userID].advertsAmount;
+                  const premium = users[userID].premium;
+
+                  //Позволяем создать объяву, если есть премиум,
+                  //или не превышено число возможных объяв
+                  if (advertsAmount < MAX_ADVERTS_AMOUNT || premium) {
+                    //Добавляем в базу объявы
+                    set(ref(database, "adverts/" + lastID), {
+                      id: lastID,
+                      userID,
+                      userEmail,
+                      rate,
+                      limit,
+                      city,
+                      name,
+                      description,
+                    });
+
+                    //Обновляем счётчики
+                    const updates = {};
+                    updates["lastAdvertID"] = lastID;
+                    updates["users/" + userID + "/advertsAmount"] =
+                      advertsAmount + 1;
+                    update(dbRef, updates);
+                  } else {
+                    closeCreateSuggestPopup();
+                    setPremiumPopupVisibility(true);
+                    console.log("Нельзя разместить объявление, нужен премиум");
+                  }
+                }
+              } else {
+                console.log("No data available");
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
 
           closeCreateSuggestPopup();
         } else {
@@ -159,7 +226,6 @@ const CreateSuggest = () => {
           />
         </div>
       </S.InputsWrap>
-
       <S.CreateSuggestPopupBackground
         style={{
           opacity: popupVisibility ? "1" : "0",
@@ -188,6 +254,32 @@ const CreateSuggest = () => {
                 addSuggest(rate, limit, city, name, description)
               }
             />
+          </S.PopupButtonsWrap>
+        </S.CreateSuggestPopupWrap>
+      </S.CreateSuggestPopupBackground>
+
+      {/* Нужен премиум попап */}
+      <S.CreateSuggestPopupBackground
+        style={{
+          opacity: PremiumPopupVisibility ? "1" : "0",
+          visibility: PremiumPopupVisibility ? "visible" : "hidden",
+        }}
+      >
+        <S.CreateSuggestPopupWrap>
+          <p>
+            Нужен премиум, чтобы создать новое объявление. На данный момент
+            максимальное количество объявлений для вашего аккаунта:{" "}
+            {MAX_ADVERTS_AMOUNT}
+          </p>
+          <S.PopupButtonsWrap>
+            <Link to="/">
+              <Button
+                text="На главную"
+                primary={true}
+                padding="2.5rem 6rem 2rem 6rem"
+                handleClick={() => setPremiumPopupVisibility(false)}
+              />
+            </Link>
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>
       </S.CreateSuggestPopupBackground>
