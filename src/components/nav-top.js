@@ -78,7 +78,9 @@ const NavTop = () => {
                 </svg>
               </S.MenuItemLoginArrow>
               <S.LoginDropdown>
-                <p>ПРОФИЛЬ</p>
+                <Link to="/profile">
+                  <p>ПРОФИЛЬ</p>
+                </Link>
                 <Link to="/">
                   <p onClick={signOutFunc}>ВЫЙТИ</p>
                 </Link>
@@ -119,7 +121,9 @@ const NavTop = () => {
             {currentUserEmail}
           </S.MenuItemPopup>
         )}
-        <S.MenuItemPopup>ПРОФИЛЬ</S.MenuItemPopup>
+        <Link to="/profile">
+          <S.MenuItemPopup>ПРОФИЛЬ</S.MenuItemPopup>
+        </Link>
         <Link to="/">
           <S.MenuItemPopup>КУПИТЬ ЕВРО</S.MenuItemPopup>
         </Link>

@@ -7,6 +7,8 @@ import { getDatabase, ref, get, child } from "firebase/database";
 import "../firebase";
 import * as S from "../components/styled-components/styled-suggest-popup";
 import Button from "../components/button";
+import NothingFoundParagraph from "../components/nothing-found-paragraph";
+import LoadingParagraph from "../components/loading-paragraph";
 
 const Main = () => {
   const [advertsResult, setAdvertsResult] = useState(null);
@@ -96,7 +98,7 @@ const Main = () => {
       <MainFilter handleChangeCity={handleChangeCity} />
 
       {advertsResult ? (
-        advertsResult?.filter((el) => switchCity(el)).length !== 0 ? (
+        advertsResult?.filter((el) => switchCity(el)).length > 0 ? (
           advertsResult
             ?.filter((el) => switchCity(el))
             .map((result, key) => {
@@ -113,12 +115,10 @@ const Main = () => {
               );
             })
         ) : (
-          <S.StyledNothingFoundParagraph>
-            Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз.
-          </S.StyledNothingFoundParagraph>
+          <NothingFoundParagraph text="Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз." />
         )
       ) : (
-        <S.StyledLoadingParagraph>Загрузка...</S.StyledLoadingParagraph>
+        <LoadingParagraph text="Загрузка..." />
       )}
 
       <S.SuggestPopupBackground

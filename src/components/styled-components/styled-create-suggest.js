@@ -88,7 +88,7 @@ export const CreateSuggestPopupBackground = styled.div`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 1);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -10,11 +10,11 @@ import { getUserEmail } from "../firebase";
 import { Link } from "react-router-dom";
 import { UserIsLoginContext } from "../App";
 import { filterInputValue } from "../components/functions";
+import SecondaryHeading from "../components/secondary-heading";
+import MAX_ADVERTS_AMOUNT from "../CONSTS/MAX_ADVERTS_AMOUNT";
 
 const CreateSuggest = () => {
   const isLogin = useContext(UserIsLoginContext);
-
-  const MAX_ADVERTS_AMOUNT = 1;
 
   const [popupVisibility, setPopupVisibility] = useState(false);
   const openCreateSuggestPopup = () => {
@@ -150,7 +150,7 @@ const CreateSuggest = () => {
   return (
     <>
       <NavTop />
-      <S.Heading>Создание предложения о&nbsp;продаже евро</S.Heading>
+      <SecondaryHeading heading="Создание предложения о&nbsp;продаже евро" />
       <S.InputsWrap>
         <S.InputElementRow>
           <S.InputElementWrap>
