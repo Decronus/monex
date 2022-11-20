@@ -9,6 +9,7 @@ import * as S from "../components/styled-components/styled-suggest-popup";
 import Button from "../components/button";
 import NothingFoundParagraph from "../components/nothing-found-paragraph";
 import LoadingParagraph from "../components/loading-paragraph";
+import ADVERTS_LIFETIME from "../CONSTS//ADVERTS_LIFETIME";
 
 const Main = () => {
   const [advertsResult, setAdvertsResult] = useState(null);
@@ -46,6 +47,12 @@ const Main = () => {
     } else if (city === "Города") {
       return el;
     }
+  };
+
+  const filterActiveAdverts = (el) => {
+    return (
+      Math.floor(Date.now() / 1000 / 60) - Number(el.minutes) < ADVERTS_LIFETIME
+    );
   };
 
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -97,29 +104,36 @@ const Main = () => {
       <MainHeadingAndCurrencies />
       <MainFilter handleChangeCity={handleChangeCity} />
 
-      {advertsResult ? (
-        advertsResult?.filter((el) => switchCity(el)).length > 0 ? (
+      {
+        //Статус загрузки
+        advertsResult ? (
+          //Если длина фильтрованного массива равна нулю, то пишем, что ничего не найдено
           advertsResult
             ?.filter((el) => switchCity(el))
-            .map((result, key) => {
-              return (
-                <SearchResultWrap
-                  currency={result.rate + " ₽"}
-                  limit={"от " + result.limit + " €"}
-                  city={result.city}
-                  name={result.name}
-                  id={result.id}
-                  key={key}
-                  handleBuy={handleBuy}
-                />
-              );
-            })
+            .filter((el) => filterActiveAdverts(el)).length > 0 ? (
+            advertsResult
+              ?.filter((el) => switchCity(el))
+              .filter((el) => filterActiveAdverts(el))
+              .map((result, key) => {
+                return (
+                  <SearchResultWrap
+                    currency={result.rate + " ₽"}
+                    limit={"от " + result.limit + " €"}
+                    city={result.city}
+                    name={result.name}
+                    id={result.id}
+                    key={key}
+                    handleBuy={handleBuy}
+                  />
+                );
+              })
+          ) : (
+            <NothingFoundParagraph text="Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз." />
+          )
         ) : (
-          <NothingFoundParagraph text="Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз." />
+          <LoadingParagraph text="Загрузка..." />
         )
-      ) : (
-        <LoadingParagraph text="Загрузка..." />
-      )}
+      }
 
       <S.SuggestPopupBackground
         style={{

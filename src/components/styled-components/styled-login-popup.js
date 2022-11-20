@@ -46,7 +46,7 @@ export const HeadingAndLogo = styled.div`
 export const LogoWrap = styled.div`
   cursor: pointer;
   & svg {
-    width: 100px;
+    width: 20rem;
   }
 `;
 

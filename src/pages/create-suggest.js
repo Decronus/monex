@@ -2,19 +2,19 @@ import NavTop from "../components/nav-top";
 import * as S from "../components/styled-components/styled-create-suggest";
 import Input from "../components/input";
 import Button from "../components/button";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
 
 import { getUserID } from "../firebase";
 import { getUserEmail } from "../firebase";
 import { Link } from "react-router-dom";
-import { UserIsLoginContext } from "../App";
+// import { UserIsLoginContext } from "../App";
 import { filterInputValue } from "../components/functions";
 import SecondaryHeading from "../components/secondary-heading";
 import MAX_ADVERTS_AMOUNT from "../CONSTS/MAX_ADVERTS_AMOUNT";
 
 const CreateSuggest = () => {
-  const isLogin = useContext(UserIsLoginContext);
+  //   const isLogin = useContext(UserIsLoginContext);
 
   const [popupVisibility, setPopupVisibility] = useState(false);
   const openCreateSuggestPopup = () => {
@@ -90,6 +90,7 @@ const CreateSuggest = () => {
                     city,
                     name,
                     description,
+                    minutes: Math.floor(Date.now() / 1000 / 60),
                   });
 
                   //Обновляем счетчик объяв
@@ -116,6 +117,7 @@ const CreateSuggest = () => {
                       city,
                       name,
                       description,
+                      minutes: Math.floor(Date.now() / 1000 / 60),
                     });
 
                     //Обновляем счётчики
@@ -286,7 +288,7 @@ const CreateSuggest = () => {
       </S.CreateSuggestPopupBackground>
 
       {/* Нужна регистрация */}
-      <S.CreateSuggestPopupBackground
+      {/* <S.CreateSuggestPopupBackground
         style={{
           opacity: isLogin ? "0" : "1",
           visibility: isLogin ? "hidden" : "visible",
@@ -315,7 +317,7 @@ const CreateSuggest = () => {
             </Link>
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>
-      </S.CreateSuggestPopupBackground>
+      </S.CreateSuggestPopupBackground> */}
     </>
   );
 };

@@ -3,16 +3,22 @@ import * as M from "./mixins";
 
 export const SearchResultWrap = styled.div`
   background: #212121;
-  padding: 2.5rem 6rem;
+  padding-top: 3.5rem;
+  padding-bottom: 2.5rem;
   ${M.marginLeftRight}
+  ${M.paddingsLeftRight}
   display: grid;
   grid-template-columns: 2fr 7fr 0.5fr;
   align-items: center;
   font-size: 2.4rem;
+  border-bottom: 1px #1b1b1b solid;
   @media (max-width: 666px) {
     grid-template-columns: 3fr 6fr 1fr;
   }
-  border-bottom: 1px #1b1b1b solid;
+  @media (max-width: 500px) {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+  }
 `;
 
 export const CurrencyAndLimitWrap = styled.div`

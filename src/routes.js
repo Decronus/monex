@@ -4,6 +4,7 @@ import CreateSuggest from "./pages/create-suggest";
 import Login from "./pages/login";
 import Reg from "./pages/reg";
 import { ProtectedRouteIsLogin } from "./components/protected-route-islogin";
+import { ProtectedRoute } from "./components/protected-route";
 import ResetPassword from "./pages/reset-password";
 import VerifyPopup from "./pages/verify-popup";
 import Profile from "./pages/profile";
@@ -14,9 +15,10 @@ export const AppRoutes = () => {
       <Route path="/" element={<Main />} />
 
       <Route path="/verify-popup" element={<VerifyPopup />} />
-      <Route path="/create-suggest" element={<CreateSuggest />} />
-
-      <Route path="/profile" element={<Profile />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/create-suggest" element={<CreateSuggest />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
 
       <Route element={<ProtectedRouteIsLogin />}>
         <Route path="/login" element={<Login />} />

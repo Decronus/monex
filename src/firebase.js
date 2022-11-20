@@ -2,6 +2,7 @@ import firebase from "firebase/compat/app";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import { getAuth, signOut } from "firebase/auth";
+import { getDatabase, ref } from "firebase/database";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -26,6 +27,9 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export const database = getDatabase();
+export const dbRef = ref(database);
 
 export const getUserID = () => {
   const auth = getAuth();

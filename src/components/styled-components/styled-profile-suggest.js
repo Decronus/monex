@@ -3,16 +3,23 @@ import * as M from "./mixins";
 
 export const Wrap = styled.div`
   background: #212121;
-  padding: 2.5rem 6rem;
+  padding-top: 3.5rem;
+  padding-bottom: 2.5rem;
   ${M.marginLeftRight}
+  ${M.paddingsLeftRight}
+  padding-right: 1rem;
   display: grid;
-  grid-template-columns: 2fr 7fr 2fr 0.5fr;
+  grid-template-columns: 2fr 6fr 2fr 0.5fr;
   align-items: center;
   font-size: 2.4rem;
-  @media (max-width: 666px) {
-    grid-template-columns: 3fr 5fr 2.5fr 1fr;
-  }
   border-bottom: 1px #1b1b1b solid;
+  @media (max-width: 666px) {
+    grid-template-columns: 3fr 4fr 3fr 0.5fr;
+  }
+  @media (max-width: 500px) {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
 `;
 
 export const CurrencyAndLimitWrap = styled.div`
@@ -36,7 +43,7 @@ export const Limit = styled.p`
 export const CityWrap = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 export const CityAndNameWrap = styled.div`
@@ -47,7 +54,7 @@ export const CityAndNameWrap = styled.div`
 
 export const CityIcon = styled.div`
   & svg {
-    width: 2.4rem;
+    width: 2rem;
   }
 `;
 
@@ -63,18 +70,55 @@ export const Name = styled.p`
 `;
 
 export const Status = styled.p`
+  max-width: 16rem;
   color: #6f6f6f;
   font-size: 1.8rem;
+  margin-bottom: 0.7rem;
 `;
 
-export const Action = styled.p`
+export const ActionAndStatus = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const Action = styled.div`
   font-size: 2rem;
   font-weight: bold;
   color: #39ee1b;
-  cursor: pointer;
+`;
+
+export const StopIcon = styled.div`
+  & svg {
+    width: 3rem;
+  }
+`;
+export const StartIcon = styled.div`
+  & svg {
+    width: 3rem;
+  }
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const StopIcon = styled.div``;
+export const DeleteAndEdit = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  & svg {
+    width: 3rem;
+  }
+  & svg:hover {
+    cursor: pointer;
+  }
+  @media (max-width: 500px) {
+    gap: 0rem;
+  }
+`;
+
+export const Delete = styled.div``;
+
+export const Edit = styled.div``;

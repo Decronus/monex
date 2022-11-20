@@ -2,21 +2,26 @@ import NavTop from "../components/nav-top";
 import ProfileSuggest from "../components/profile-suggest";
 import SecondaryHeading from "../components/secondary-heading";
 import ThirdHeading from "../components/third-heading";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { getDatabase, get, child, ref } from "firebase/database";
 import { getUserEmail } from "../firebase";
 import NothingFoundParagraph from "../components/nothing-found-paragraph";
 import LoadingParagraph from "../components/loading-paragraph";
-import * as S from "../components/styled-components/styled-create-suggest";
-import Button from "../components/button";
-import { Link } from "react-router-dom";
-import { UserIsLoginContext } from "../App";
+import ADVERTS_LIFETIME from "../CONSTS//ADVERTS_LIFETIME";
+import { dbRef } from "../firebase";
+import { update } from "firebase/database";
+// import * as S from "../components/styled-components/styled-create-suggest";
+// import Button from "../components/button";
+// import { Link } from "react-router-dom";
+// import { UserIsLoginContext } from "../App";
 
 const Profile = () => {
-  const isLogin = useContext(UserIsLoginContext);
+  //   const isLogin = useContext(UserIsLoginContext);
 
   const [advertsResult, setAdvertsResult] = useState(null);
-
+  advertsResult?.forEach((el) => {
+    console.log("minutes", el.minutes);
+  });
   useEffect(() => {
     getAdverts();
   }, []);
@@ -29,7 +34,7 @@ const Profile = () => {
           const result = Object.values(snapshot.val());
           const sortedResult = result.sort((x, y) => x.id - y.id);
           setAdvertsResult(sortedResult);
-          console.log(sortedResult);
+          console.log("active", sortedResult[0].active);
         } else {
           console.log("No data available");
         }
@@ -37,6 +42,52 @@ const Profile = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const expTimeHoursMinutes = (elementMinutes) => {
+    const valueMinutes =
+      elementMinutes + ADVERTS_LIFETIME - Math.floor(Date.now() / 1000 / 60);
+    if (valueMinutes <= 0) return "Время размещения вышло";
+
+    let hours = Math.floor(valueMinutes / 60);
+    const minutes = valueMinutes - hours * 60;
+    const hoursString = String(hours);
+
+    let hoursText = "";
+    if (hours === 0) {
+      hoursText = "";
+    } else if (
+      hoursString.slice(hoursString.length - 2) >= "11" &&
+      hoursString.slice(hoursString.length - 2) <= "19"
+    ) {
+      hoursText = "часов";
+    } else if (hoursString.slice(hoursString.length - 1) === "1") {
+      hoursText = "час";
+    } else if (
+      hoursString.slice(hoursString.length - 1) >= "2" &&
+      hoursString.slice(hoursString.length - 1) <= "4"
+    ) {
+      hoursText = "часа";
+    } else if (
+      (hoursString.slice(hoursString.length - 1) >= "5" &&
+        hoursString.slice(hoursString.length - 1) <= "9") ||
+      hoursString.slice(hoursString.length - 1) === "0"
+    ) {
+      hoursText = "часов";
+    }
+    if (hours === 0) {
+      hours = "";
+    }
+
+    return `${hours} ${hoursText} ${minutes} мин.`;
+  };
+
+  const updateAdvertMinutes = (event) => {
+    const id = event.target.id;
+    const updates = {};
+    updates["adverts/" + id + "/minutes"] = Math.floor(Date.now() / 1000 / 60);
+    update(dbRef, updates);
+    window.location.reload();
   };
 
   return (
@@ -58,6 +109,9 @@ const Profile = () => {
                   limit={el.limit}
                   city={el.city}
                   id={el.id}
+                  expTime={expTimeHoursMinutes(el.minutes)}
+                  minutes={el.minutes}
+                  handleUpldateAdvertMinutes={updateAdvertMinutes}
                 />
               );
             })
@@ -69,7 +123,7 @@ const Profile = () => {
       )}
 
       {/* Нужна регистрация */}
-      <S.CreateSuggestPopupBackground
+      {/* <S.CreateSuggestPopupBackground
         style={{
           opacity: isLogin ? "0" : "1",
           visibility: isLogin ? "hidden" : "visible",
@@ -96,7 +150,7 @@ const Profile = () => {
             </Link>
           </S.PopupButtonsWrap>
         </S.CreateSuggestPopupWrap>
-      </S.CreateSuggestPopupBackground>
+      </S.CreateSuggestPopupBackground> */}
     </>
   );
 };
