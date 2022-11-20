@@ -11,7 +11,6 @@ function App() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       setIsLogin(user);
-      console.log("create suggets user", user);
     });
   });
   return (

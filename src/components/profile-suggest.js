@@ -1,8 +1,8 @@
 import * as S from "./styled-components/styled-profile-suggest";
 import { useState } from "react";
 import ADVERTS_LIFETIME from "../CONSTS/ADVERTS_LIFETIME";
-import { database } from "../firebase";
-import { ref, remove } from "firebase/database";
+import { database, getUserID } from "../firebase";
+import { ref, remove, get, child, update } from "firebase/database";
 
 const ProfileSuggest = ({
   id,
@@ -20,8 +20,32 @@ const ProfileSuggest = ({
 
   const handleDeleteAdvert = (event) => {
     const id = event.target.id;
+    //Удаляем само объявление
     remove(ref(database, "adverts/" + id));
-    window.location.reload();
+
+    //Декремент количества объяв пользователя
+    const userID = getUserID();
+    console.log("userID", userID);
+    const dbRef = ref(database);
+    get(child(dbRef, "users"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          console.log("usets", users);
+          const advertsAmount = users[userID].advertsAmount;
+          console.log("adverts amount", advertsAmount);
+          const updates = {};
+          updates["users/" + userID + "/advertsAmount"] = advertsAmount - 1;
+          update(dbRef, updates);
+          console.log(update(dbRef, updates));
+          window.location.reload();
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

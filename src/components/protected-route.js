@@ -4,7 +4,6 @@ import { UserIsLoginContext } from "../App";
 
 export const ProtectedRoute = ({ redirectPath = "/login" }) => {
   const isLogin = useContext(UserIsLoginContext);
-  console.log("prot route user is login", isLogin);
   if (isLogin !== undefined)
     if (!isLogin) {
       return <Navigate to={redirectPath} replace={true} />;

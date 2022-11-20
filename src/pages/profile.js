@@ -10,19 +10,22 @@ import LoadingParagraph from "../components/loading-paragraph";
 import ADVERTS_LIFETIME from "../CONSTS//ADVERTS_LIFETIME";
 import { dbRef } from "../firebase";
 import { update } from "firebase/database";
-// import * as S from "../components/styled-components/styled-create-suggest";
-// import Button from "../components/button";
-// import { Link } from "react-router-dom";
-// import { UserIsLoginContext } from "../App";
+import FadingPopup from "../components/fading-popup";
 
 const Profile = () => {
-  //   const isLogin = useContext(UserIsLoginContext);
+  const [fadingPopupVisibility, setFadingPopupVisibility] = useState(false);
 
   const [advertsResult, setAdvertsResult] = useState(null);
-  advertsResult?.forEach((el) => {
-    console.log("minutes", el.minutes);
-  });
+  advertsResult?.forEach((el) => {});
   useEffect(() => {
+    // setFadingPopupVisibility(false);
+    if (localStorage.getItem("fadingPopupVisibility") === "true") {
+      setFadingPopupVisibility(true);
+    }
+    localStorage.setItem("fadingPopupVisibility", "false");
+    setTimeout(() => {
+      setFadingPopupVisibility(false);
+    }, 3000);
     getAdverts();
   }, []);
 
@@ -34,7 +37,6 @@ const Profile = () => {
           const result = Object.values(snapshot.val());
           const sortedResult = result.sort((x, y) => x.id - y.id);
           setAdvertsResult(sortedResult);
-          console.log("active", sortedResult[0].active);
         } else {
           console.log("No data available");
         }
@@ -120,6 +122,9 @@ const Profile = () => {
         )
       ) : (
         <LoadingParagraph text="Загрузка..." />
+      )}
+      {fadingPopupVisibility && (
+        <FadingPopup text="Предложение о продаже успешно создано" />
       )}
 
       {/* Нужна регистрация */}

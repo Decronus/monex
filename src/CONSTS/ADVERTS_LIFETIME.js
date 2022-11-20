@@ -1,3 +1,3 @@
-const ADVERTS_LIFETIME = 2; //минут
+const ADVERTS_LIFETIME = 5; //минут
 
 export default ADVERTS_LIFETIME;

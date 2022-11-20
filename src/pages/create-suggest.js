@@ -4,7 +4,6 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useState } from "react";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
-
 import { getUserID } from "../firebase";
 import { getUserEmail } from "../firebase";
 import { Link } from "react-router-dom";
@@ -12,9 +11,11 @@ import { Link } from "react-router-dom";
 import { filterInputValue } from "../components/functions";
 import SecondaryHeading from "../components/secondary-heading";
 import MAX_ADVERTS_AMOUNT from "../CONSTS/MAX_ADVERTS_AMOUNT";
+import { useNavigate } from "react-router-dom";
 
 const CreateSuggest = () => {
   //   const isLogin = useContext(UserIsLoginContext);
+  const navigate = useNavigate();
 
   const [popupVisibility, setPopupVisibility] = useState(false);
   const openCreateSuggestPopup = () => {
@@ -97,6 +98,8 @@ const CreateSuggest = () => {
                   const updates = {};
                   updates["lastAdvertID"] = lastID;
                   update(dbRef, updates);
+                  localStorage.setItem("fadingPopupVisibility", "true");
+                  navigate("/profile", { replace: true });
 
                   //Если пользователь есть в объекте users,
                   //то есть создает объяву не впервые,
@@ -126,6 +129,8 @@ const CreateSuggest = () => {
                     updates["users/" + userID + "/advertsAmount"] =
                       advertsAmount + 1;
                     update(dbRef, updates);
+                    localStorage.setItem("fadingPopupVisibility", "true");
+                    navigate("/profile", { replace: true });
                   } else {
                     closeCreateSuggestPopup();
                     setPremiumPopupVisibility(true);
@@ -305,9 +310,9 @@ const CreateSuggest = () => {
               padding="2.5rem 6rem 2rem 6rem"
               handleClick={() => window.history.back()}
             />
-            <Link to="/login">
+            <Link to="/profile">
               <Button
-                text="Войти"
+                text="ОК"
                 primary={true}
                 padding="2.5rem 6rem 2rem 6rem"
                 handleClick={() =>

@@ -93,12 +93,16 @@ export const StopIcon = styled.div`
     width: 3rem;
   }
 `;
+
 export const StartIcon = styled.div`
   & svg {
     width: 3rem;
   }
   &:hover {
     cursor: pointer;
+  }
+  &:hover path {
+    fill: #ffffff;
   }
 `;
 
@@ -119,6 +123,14 @@ export const DeleteAndEdit = styled.div`
   }
 `;
 
-export const Delete = styled.div``;
+export const Delete = styled.div`
+  &:hover path {
+    fill: #9c0303;
+  }
+`;
 
-export const Edit = styled.div``;
+export const Edit = styled.div`
+  &:hover path {
+    fill: #d8c204;
+  }
+`;
