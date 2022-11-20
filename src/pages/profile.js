@@ -13,18 +13,21 @@ import { update } from "firebase/database";
 import FadingPopup from "../components/fading-popup";
 
 const Profile = () => {
-  const [fadingPopupVisibility, setFadingPopupVisibility] = useState(false);
+  const [createSuggestSuccess, setCreateSuggestSuccess] = useState(false);
+  const [deleteSuggestSuccess, setDeleteSuggestSuccess] = useState(false);
+  const deleteSuggest = () => {
+    setDeleteSuggestSuccess(true);
+  };
 
   const [advertsResult, setAdvertsResult] = useState(null);
   advertsResult?.forEach((el) => {});
   useEffect(() => {
-    // setFadingPopupVisibility(false);
     if (localStorage.getItem("fadingPopupVisibility") === "true") {
-      setFadingPopupVisibility(true);
+      setCreateSuggestSuccess(true);
     }
     localStorage.setItem("fadingPopupVisibility", "false");
     setTimeout(() => {
-      setFadingPopupVisibility(false);
+      setCreateSuggestSuccess(false);
     }, 3000);
     getAdverts();
   }, []);
@@ -84,13 +87,13 @@ const Profile = () => {
     return `${hours} ${hoursText} ${minutes} мин.`;
   };
 
-  const updateAdvertMinutes = (event) => {
-    const id = event.target.id;
-    const updates = {};
-    updates["adverts/" + id + "/minutes"] = Math.floor(Date.now() / 1000 / 60);
-    update(dbRef, updates);
-    window.location.reload();
-  };
+  //   const updateAdvertMinutes = (event) => {
+  //     const id = event.target.id;
+  //     const updates = {};
+  //     updates["adverts/" + id + "/minutes"] = Math.floor(Date.now() / 1000 / 60);
+  //     update(dbRef, updates);
+  //     window.location.reload();
+  //   };
 
   return (
     <>
@@ -113,7 +116,8 @@ const Profile = () => {
                   id={el.id}
                   expTime={expTimeHoursMinutes(el.minutes)}
                   minutes={el.minutes}
-                  handleUpldateAdvertMinutes={updateAdvertMinutes}
+                  //   handleUpldateAdvertMinutes={updateAdvertMinutes}
+                  deleteSuggest={deleteSuggest}
                 />
               );
             })
@@ -123,8 +127,12 @@ const Profile = () => {
       ) : (
         <LoadingParagraph text="Загрузка..." />
       )}
-      {fadingPopupVisibility && (
+      {createSuggestSuccess && (
         <FadingPopup text="Предложение о продаже успешно создано" />
+      )}
+
+      {deleteSuggestSuccess && (
+        <FadingPopup text="Предложение о продаже успешно удалено" />
       )}
 
       {/* Нужна регистрация */}
