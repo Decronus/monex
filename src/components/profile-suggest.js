@@ -18,7 +18,6 @@ const ProfileSuggest = ({
   city,
   expTime,
   minutes,
-  //   handleUpldateAdvertMinutes,
   deleteSuggest,
 }) => {
   const [notDeleted, setNotDeleted] = useState(true);
@@ -34,7 +33,7 @@ const ProfileSuggest = ({
 
   const handleDeleteAdvert = (event) => {
     const id = event.target.id;
-    //Удаляем само объявление
+    //Удаляем запись объявления в базе
     remove(ref(database, "adverts/" + id));
 
     //Декремент количества объяв пользователя

@@ -16,10 +16,10 @@ const StyledLoadingParagraph = styled.p`
   margin-right: 12rem;
   margin-top: 4rem;
   animation: ${loading} 1s ease-in-out infinite;
-  @media (max-width: 500px) {
-    margin-left: 6rem;
-    margin-right: 6rem;
-  }
+  //   @media (max-width: 500px) {
+  //     margin-left: 6rem;
+  //     margin-right: 6rem;
+  //   }
 `;
 
 export default StyledLoadingParagraph;

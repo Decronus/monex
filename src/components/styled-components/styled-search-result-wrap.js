@@ -15,10 +15,10 @@ export const SearchResultWrap = styled.div`
   @media (max-width: 666px) {
     grid-template-columns: 3fr 6fr 1fr;
   }
-  @media (max-width: 500px) {
-    padding-top: 1.5rem;
-    padding-bottom: 1rem;
-  }
+  //   @media (max-width: 500px) {
+  //     padding-top: 1.5rem;
+  //     padding-bottom: 1rem;
+  //   }
 `;
 
 export const CurrencyAndLimitWrap = styled.div`

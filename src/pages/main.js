@@ -128,7 +128,7 @@ const Main = () => {
                 );
               })
           ) : (
-            <NothingFoundParagraph text="Ничего не найдено. Измените поисковые фильтры и попробуйте еще раз." />
+            <NothingFoundParagraph text="Ничего не&nbsp;найдено. Измените поисковые фильтры и&nbsp;попробуйте еще раз." />
           )
         ) : (
           <LoadingParagraph text="Загрузка..." />

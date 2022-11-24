@@ -276,8 +276,8 @@ const CreateSuggest = () => {
         <S.CreateSuggestPopupWrap>
           <p>
             Нужен <span>ПРЕМИУМ-АККАУНТ</span>, чтобы создать новое объявление.
-            На данный момент максимальное количество объявлений для вашего
-            аккаунта: <span>{MAX_ADVERTS_AMOUNT}</span>
+            На&nbsp;данный момент максимальное количество объявлений
+            для&nbsp;вашего аккаунта: <span>{MAX_ADVERTS_AMOUNT}</span>
           </p>
           <S.PopupButtonsWrap>
             <Link to="/">

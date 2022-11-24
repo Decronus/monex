@@ -9,17 +9,17 @@ export const Wrap = styled.div`
   ${M.paddingsLeftRight}
   padding-right: 1rem;
   display: grid;
-  grid-template-columns: 2fr 6fr 2fr 0.5fr;
+  grid-template-columns: 2fr 5fr 2fr 1fr;
   align-items: center;
   font-size: 2.4rem;
   border-bottom: 1px #1b1b1b solid;
   @media (max-width: 666px) {
-    grid-template-columns: 3fr 4fr 3fr 0.5fr;
+    grid-template-columns: 2.5fr 4fr 3fr 2fr;
   }
-  @media (max-width: 500px) {
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-  }
+  //   @media (max-width: 500px) {
+  //     padding-top: 2rem;
+  //     padding-bottom: 1rem;
+  //   }
 `;
 
 export const CurrencyAndLimitWrap = styled.div`
@@ -37,7 +37,7 @@ export const Currency = styled.p`
 
 export const Limit = styled.p`
   color: #6f6f6f;
-  font-size: 1.8rem;
+  font-size: 2rem;
 `;
 
 export const CityWrap = styled.div`
@@ -59,20 +59,20 @@ export const CityIcon = styled.div`
 `;
 
 export const City = styled.p`
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #ffffff;
 `;
 
 export const Name = styled.p`
   color: #6f6f6f;
-  font-size: 1.8rem;
+  font-size: 2rem;
 `;
 
 export const Status = styled.p`
-  max-width: 16rem;
+  //   max-width: 16rem;
   color: #6f6f6f;
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 0.7rem;
 `;
 
@@ -119,7 +119,7 @@ export const DeleteAndEdit = styled.div`
     cursor: pointer;
   }
   @media (max-width: 500px) {
-    gap: 0rem;
+    gap: 2rem;
   }
 `;
 

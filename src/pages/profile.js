@@ -8,8 +8,6 @@ import { getUserEmail } from "../firebase";
 import NothingFoundParagraph from "../components/nothing-found-paragraph";
 import LoadingParagraph from "../components/loading-paragraph";
 import ADVERTS_LIFETIME from "../CONSTS//ADVERTS_LIFETIME";
-import { dbRef } from "../firebase";
-import { update } from "firebase/database";
 import FadingPopup from "../components/fading-popup";
 
 const Profile = () => {
@@ -122,17 +120,17 @@ const Profile = () => {
               );
             })
         ) : (
-          <NothingFoundParagraph text="Вы еще не создали ни одного предложения о продаже." />
+          <NothingFoundParagraph text="Вы&nbsp;еще не&nbsp;оздали ни&nbsp;одного предложения о&nbsp;продаже." />
         )
       ) : (
         <LoadingParagraph text="Загрузка..." />
       )}
       {createSuggestSuccess && (
-        <FadingPopup text="Предложение о продаже успешно создано" />
+        <FadingPopup text="Предложение о&nbsp;продаже успешно создано" />
       )}
 
       {deleteSuggestSuccess && (
-        <FadingPopup text="Предложение о продаже успешно удалено" />
+        <FadingPopup text="Предложение о&nbsp;продаже успешно удалено" />
       )}
 
       {/* Нужна регистрация */}

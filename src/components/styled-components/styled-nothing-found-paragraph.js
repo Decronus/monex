@@ -6,10 +6,10 @@ const StyledNothingFoundParagraph = styled.p`
   margin-left: 12rem;
   margin-right: 12rem;
   margin-top: 4rem;
-  @media (max-width: 500px) {
-    margin-left: 6rem;
-    margin-right: 6rem;
-  }
+  //   @media (max-width: 500px) {
+  //     margin-left: 6rem;
+  //     margin-right: 6rem;
+  //   }
 `;
 
 export default StyledNothingFoundParagraph;
